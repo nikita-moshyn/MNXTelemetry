@@ -28,6 +28,6 @@ let package = Package(name: "MNXTelemetry",
                             name: "MNXTelemetryTests",
                             dependencies: ["MNXTelemetry"]),
                       ],
-                      swiftLanguageVersions: [.v6]
+                      swiftLanguageModes: [.v6]
 )
 

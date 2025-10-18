@@ -53,6 +53,17 @@ public struct TypedTelemetry<Event: AnalyticsEvent> {
     public static func track(_ event: Event) {
         Telemetry.shared.track(name: event.name, properties: event.properties)
     }
+    
+    @inline(__always)
+    public static func logError(_ error: Error, context: [String: Any]? = nil) {
+        Telemetry.shared.logError(error, context: context)
+    }
+    
+    /// flush without creating an instance: `TypedTelemetry<OnlyCardsEvents>.flush()`
+    @inline(__always)
+    public static func flush() {
+        Telemetry.shared.flush()
+    }
 }
 
 // MARK: - Ergonomics
@@ -65,3 +76,4 @@ public extension Telemetry {
 
 /// Shorthand generic alias so you can write `EventTelemetry<MyAppEvents>.track(...)`.
 //public typealias EventTelemetry<E: AnalyticsEvent> = TypedTelemetry<E>
+typealias GenericEventTemetry = TypedTelemetry<GenericEvents>

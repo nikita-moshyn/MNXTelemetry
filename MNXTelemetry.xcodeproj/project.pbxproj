@@ -21,6 +21,8 @@
 		AD1E09052E89A0380067B114 /* TypedTelemetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1E09042E89A0380067B114 /* TypedTelemetry.swift */; };
 		AD1E09072E89A7100067B114 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1E09062E89A7100067B114 /* AnalyticsEvent.swift */; };
 		AD1E09162E89C5BA0067B114 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = AD1E09152E89C5BA0067B114 /* Sentry */; };
+		ADEB59802E8B2A7C00E02D7F /* TelemetryMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB597F2E8B2A7C00E02D7F /* TelemetryMetrics.swift */; };
+		ADEB5B782E8F280400E02D7F /* TelemetryIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB5B772E8F280400E02D7F /* TelemetryIdentity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		AD1E08FF2E89976A0067B114 /* Flags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flags.swift; sourceTree = "<group>"; };
 		AD1E09042E89A0380067B114 /* TypedTelemetry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedTelemetry.swift; sourceTree = "<group>"; };
 		AD1E09062E89A7100067B114 /* AnalyticsEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
+		ADEB597F2E8B2A7C00E02D7F /* TelemetryMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryMetrics.swift; sourceTree = "<group>"; };
+		ADEB5B772E8F280400E02D7F /* TelemetryIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryIdentity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +107,9 @@
 			isa = PBXGroup;
 			children = (
 				AD1E08EB2E8987CC0067B114 /* Telemetry.swift */,
+				ADEB597F2E8B2A7C00E02D7F /* TelemetryMetrics.swift */,
 				AD1E09042E89A0380067B114 /* TypedTelemetry.swift */,
+				ADEB5B772E8F280400E02D7F /* TelemetryIdentity.swift */,
 				AD1E08FF2E89976A0067B114 /* Flags.swift */,
 				AD1E08F02E898BC10067B114 /* Providers */,
 				AD1E08F12E898BE20067B114 /* Internal */,
@@ -114,8 +120,7 @@
 		AD1E08F02E898BC10067B114 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
-				AD1E08F52E898C610067B114 /* AnalyticsProvider.swift */,
-				AD1E08F72E898C790067B114 /* CrashProvider.swift */,
+				ADEB5B792E8F29C300E02D7F /* Core */,
 				AD1E08F92E898C8D0067B114 /* AmplitudeProvider.swift */,
 				AD1E08FB2E898C950067B114 /* PostHogProvider.swift */,
 				AD1E08FD2E898C9C0067B114 /* SentryCrashProvider.swift */,
@@ -137,6 +142,15 @@
 				AD1E08F22E898BEC0067B114 /* MNXTelemetryTests.swift */,
 			);
 			path = MNXTelemetryTests;
+			sourceTree = "<group>";
+		};
+		ADEB5B792E8F29C300E02D7F /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				AD1E08F52E898C610067B114 /* AnalyticsProvider.swift */,
+				AD1E08F72E898C790067B114 /* CrashProvider.swift */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,11 +275,13 @@
 				AD1E08EC2E8987CC0067B114 /* Telemetry.swift in Sources */,
 				AD1E08E32E8985420067B114 /* MNXTelemetry.docc in Sources */,
 				AD1E09052E89A0380067B114 /* TypedTelemetry.swift in Sources */,
+				ADEB5B782E8F280400E02D7F /* TelemetryIdentity.swift in Sources */,
 				AD1E08F82E898C790067B114 /* CrashProvider.swift in Sources */,
 				AD1E09002E89976A0067B114 /* Flags.swift in Sources */,
 				AD1E08FE2E898C9C0067B114 /* SentryCrashProvider.swift in Sources */,
 				AD1E08FA2E898C8D0067B114 /* AmplitudeProvider.swift in Sources */,
 				AD1E09072E89A7100067B114 /* AnalyticsEvent.swift in Sources */,
+				ADEB59802E8B2A7C00E02D7F /* TelemetryMetrics.swift in Sources */,
 				AD1E08F62E898C610067B114 /* AnalyticsProvider.swift in Sources */,
 				AD1E08FC2E898C950067B114 /* PostHogProvider.swift in Sources */,
 			);

@@ -12,7 +12,7 @@
 import Foundation
 
 public final class Flags {
-    public static let shared = Flags()
+    nonisolated(unsafe) public static let shared = Flags()
     private init() {}
 
     public enum Mode {

@@ -12,7 +12,7 @@
 import Foundation
 
 public final class Telemetry {
-    public static let shared = Telemetry()
+    nonisolated(unsafe) public static let shared = Telemetry()
     private init() {}
     
     private var analyticsProviders: [AnalyticsProvider] = []
