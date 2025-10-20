@@ -1,0 +1,597 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AD1E08D02E8984C50067B114 /* MNXTelemetry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1E08C52E8984C40067B114 /* MNXTelemetry.framework */; };
+		AD1E08E32E8985420067B114 /* MNXTelemetry.docc in Sources */ = {isa = PBXBuildFile; fileRef = AD1E08E12E8985420067B114 /* MNXTelemetry.docc */; };
+		AD1E08EC2E8987CC0067B114 /* Telemetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1E08EB2E8987CC0067B114 /* Telemetry.swift */; };
+		AD1E08F42E898BEC0067B114 /* MNXTelemetryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1E08F22E898BEC0067B114 /* MNXTelemetryTests.swift */; };
+		AD1E08F62E898C610067B114 /* AnalyticsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1E08F52E898C610067B114 /* AnalyticsProvider.swift */; };
+		AD1E08F82E898C790067B114 /* CrashProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1E08F72E898C790067B114 /* CrashProvider.swift */; };
+		AD1E08FA2E898C8D0067B114 /* AmplitudeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1E08F92E898C8D0067B114 /* AmplitudeProvider.swift */; };
+		AD1E08FC2E898C950067B114 /* PostHogProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1E08FB2E898C950067B114 /* PostHogProvider.swift */; };
+		AD1E08FE2E898C9C0067B114 /* SentryCrashProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1E08FD2E898C9C0067B114 /* SentryCrashProvider.swift */; };
+		AD1E09002E89976A0067B114 /* Flags.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1E08FF2E89976A0067B114 /* Flags.swift */; };
+		AD1E09032E899AC20067B114 /* AmplitudeSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AD1E09022E899AC20067B114 /* AmplitudeSwift */; };
+		AD1E09052E89A0380067B114 /* TypedTelemetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1E09042E89A0380067B114 /* TypedTelemetry.swift */; };
+		AD1E09072E89A7100067B114 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1E09062E89A7100067B114 /* AnalyticsEvent.swift */; };
+		AD1E09162E89C5BA0067B114 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = AD1E09152E89C5BA0067B114 /* Sentry */; };
+		ADEB59802E8B2A7C00E02D7F /* TelemetryMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB597F2E8B2A7C00E02D7F /* TelemetryMetrics.swift */; };
+		ADEB5B782E8F280400E02D7F /* TelemetryIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB5B772E8F280400E02D7F /* TelemetryIdentity.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AD1E08D12E8984C50067B114 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD1E08BC2E8984C40067B114 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD1E08C42E8984C40067B114;
+			remoteInfo = MNXTelemetry;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AD1E08C52E8984C40067B114 /* MNXTelemetry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MNXTelemetry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD1E08CF2E8984C50067B114 /* MNXTelemetryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MNXTelemetryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD1E08E12E8985420067B114 /* MNXTelemetry.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = MNXTelemetry.docc; sourceTree = "<group>"; };
+		AD1E08E72E89868A0067B114 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		AD1E08EB2E8987CC0067B114 /* Telemetry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Telemetry.swift; sourceTree = "<group>"; };
+		AD1E08F22E898BEC0067B114 /* MNXTelemetryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNXTelemetryTests.swift; sourceTree = "<group>"; };
+		AD1E08F52E898C610067B114 /* AnalyticsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsProvider.swift; sourceTree = "<group>"; };
+		AD1E08F72E898C790067B114 /* CrashProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashProvider.swift; sourceTree = "<group>"; };
+		AD1E08F92E898C8D0067B114 /* AmplitudeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmplitudeProvider.swift; sourceTree = "<group>"; };
+		AD1E08FB2E898C950067B114 /* PostHogProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHogProvider.swift; sourceTree = "<group>"; };
+		AD1E08FD2E898C9C0067B114 /* SentryCrashProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryCrashProvider.swift; sourceTree = "<group>"; };
+		AD1E08FF2E89976A0067B114 /* Flags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flags.swift; sourceTree = "<group>"; };
+		AD1E09042E89A0380067B114 /* TypedTelemetry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedTelemetry.swift; sourceTree = "<group>"; };
+		AD1E09062E89A7100067B114 /* AnalyticsEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
+		ADEB597F2E8B2A7C00E02D7F /* TelemetryMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryMetrics.swift; sourceTree = "<group>"; };
+		ADEB5B772E8F280400E02D7F /* TelemetryIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryIdentity.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AD1E08C22E8984C40067B114 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1E09032E899AC20067B114 /* AmplitudeSwift in Frameworks */,
+				AD1E09162E89C5BA0067B114 /* Sentry in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD1E08CC2E8984C50067B114 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1E08D02E8984C50067B114 /* MNXTelemetry.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AD1E08BB2E8984C40067B114 = {
+			isa = PBXGroup;
+			children = (
+				AD1E08E72E89868A0067B114 /* Package.swift */,
+				AD1E08E62E8986710067B114 /* Sources */,
+				AD1E08F32E898BEC0067B114 /* MNXTelemetryTests */,
+				AD1E08C62E8984C40067B114 /* Products */,
+				AD1E08E12E8985420067B114 /* MNXTelemetry.docc */,
+			);
+			sourceTree = "<group>";
+		};
+		AD1E08C62E8984C40067B114 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD1E08C52E8984C40067B114 /* MNXTelemetry.framework */,
+				AD1E08CF2E8984C50067B114 /* MNXTelemetryTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AD1E08E62E8986710067B114 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				AD1E08EF2E898BAE0067B114 /* MNXTelemetry */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		AD1E08EF2E898BAE0067B114 /* MNXTelemetry */ = {
+			isa = PBXGroup;
+			children = (
+				AD1E08EB2E8987CC0067B114 /* Telemetry.swift */,
+				ADEB597F2E8B2A7C00E02D7F /* TelemetryMetrics.swift */,
+				AD1E09042E89A0380067B114 /* TypedTelemetry.swift */,
+				ADEB5B772E8F280400E02D7F /* TelemetryIdentity.swift */,
+				AD1E08FF2E89976A0067B114 /* Flags.swift */,
+				AD1E08F02E898BC10067B114 /* Providers */,
+				AD1E08F12E898BE20067B114 /* Internal */,
+			);
+			path = MNXTelemetry;
+			sourceTree = "<group>";
+		};
+		AD1E08F02E898BC10067B114 /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				ADEB5B792E8F29C300E02D7F /* Core */,
+				AD1E08F92E898C8D0067B114 /* AmplitudeProvider.swift */,
+				AD1E08FB2E898C950067B114 /* PostHogProvider.swift */,
+				AD1E08FD2E898C9C0067B114 /* SentryCrashProvider.swift */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
+		AD1E08F12E898BE20067B114 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				AD1E09062E89A7100067B114 /* AnalyticsEvent.swift */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
+		AD1E08F32E898BEC0067B114 /* MNXTelemetryTests */ = {
+			isa = PBXGroup;
+			children = (
+				AD1E08F22E898BEC0067B114 /* MNXTelemetryTests.swift */,
+			);
+			path = MNXTelemetryTests;
+			sourceTree = "<group>";
+		};
+		ADEB5B792E8F29C300E02D7F /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				AD1E08F52E898C610067B114 /* AnalyticsProvider.swift */,
+				AD1E08F72E898C790067B114 /* CrashProvider.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		AD1E08C02E8984C40067B114 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		AD1E08C42E8984C40067B114 /* MNXTelemetry */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD1E08D82E8984C50067B114 /* Build configuration list for PBXNativeTarget "MNXTelemetry" */;
+			buildPhases = (
+				AD1E08C02E8984C40067B114 /* Headers */,
+				AD1E08C12E8984C40067B114 /* Sources */,
+				AD1E08C22E8984C40067B114 /* Frameworks */,
+				AD1E08C32E8984C40067B114 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MNXTelemetry;
+			packageProductDependencies = (
+				AD1E09022E899AC20067B114 /* AmplitudeSwift */,
+				AD1E09152E89C5BA0067B114 /* Sentry */,
+			);
+			productName = MNXTelemetry;
+			productReference = AD1E08C52E8984C40067B114 /* MNXTelemetry.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		AD1E08CE2E8984C50067B114 /* MNXTelemetryTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD1E08DD2E8984C50067B114 /* Build configuration list for PBXNativeTarget "MNXTelemetryTests" */;
+			buildPhases = (
+				AD1E08CB2E8984C50067B114 /* Sources */,
+				AD1E08CC2E8984C50067B114 /* Frameworks */,
+				AD1E08CD2E8984C50067B114 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AD1E08D22E8984C50067B114 /* PBXTargetDependency */,
+			);
+			name = MNXTelemetryTests;
+			packageProductDependencies = (
+			);
+			productName = MNXTelemetryTests;
+			productReference = AD1E08CF2E8984C50067B114 /* MNXTelemetryTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AD1E08BC2E8984C40067B114 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					AD1E08C42E8984C40067B114 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					AD1E08CE2E8984C50067B114 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+				};
+			};
+			buildConfigurationList = AD1E08BF2E8984C40067B114 /* Build configuration list for PBXProject "MNXTelemetry" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AD1E08BB2E8984C40067B114;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				AD1E09012E899AC20067B114 /* XCRemoteSwiftPackageReference "Amplitude-Swift" */,
+				AD1E09142E89C5BA0067B114 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = AD1E08C62E8984C40067B114 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD1E08C42E8984C40067B114 /* MNXTelemetry */,
+				AD1E08CE2E8984C50067B114 /* MNXTelemetryTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AD1E08C32E8984C40067B114 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD1E08CD2E8984C50067B114 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AD1E08C12E8984C40067B114 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1E08EC2E8987CC0067B114 /* Telemetry.swift in Sources */,
+				AD1E08E32E8985420067B114 /* MNXTelemetry.docc in Sources */,
+				AD1E09052E89A0380067B114 /* TypedTelemetry.swift in Sources */,
+				ADEB5B782E8F280400E02D7F /* TelemetryIdentity.swift in Sources */,
+				AD1E08F82E898C790067B114 /* CrashProvider.swift in Sources */,
+				AD1E09002E89976A0067B114 /* Flags.swift in Sources */,
+				AD1E08FE2E898C9C0067B114 /* SentryCrashProvider.swift in Sources */,
+				AD1E08FA2E898C8D0067B114 /* AmplitudeProvider.swift in Sources */,
+				AD1E09072E89A7100067B114 /* AnalyticsEvent.swift in Sources */,
+				ADEB59802E8B2A7C00E02D7F /* TelemetryMetrics.swift in Sources */,
+				AD1E08F62E898C610067B114 /* AnalyticsProvider.swift in Sources */,
+				AD1E08FC2E898C950067B114 /* PostHogProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD1E08CB2E8984C50067B114 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1E08F42E898BEC0067B114 /* MNXTelemetryTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AD1E08D22E8984C50067B114 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD1E08C42E8984C40067B114 /* MNXTelemetry */;
+			targetProxy = AD1E08D12E8984C50067B114 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AD1E08D92E8984C50067B114 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = VJPQWNYP29;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.moshyn.nikita.MNXTelemetry;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AD1E08DA2E8984C50067B114 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = VJPQWNYP29;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.moshyn.nikita.MNXTelemetry;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AD1E08DB2E8984C50067B114 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		AD1E08DC2E8984C50067B114 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		AD1E08DE2E8984C50067B114 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VJPQWNYP29;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.moshyn.nikita.MNXTelemetryTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AD1E08DF2E8984C50067B114 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VJPQWNYP29;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.moshyn.nikita.MNXTelemetryTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD1E08BF2E8984C40067B114 /* Build configuration list for PBXProject "MNXTelemetry" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD1E08DB2E8984C50067B114 /* Debug */,
+				AD1E08DC2E8984C50067B114 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD1E08D82E8984C50067B114 /* Build configuration list for PBXNativeTarget "MNXTelemetry" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD1E08D92E8984C50067B114 /* Debug */,
+				AD1E08DA2E8984C50067B114 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD1E08DD2E8984C50067B114 /* Build configuration list for PBXNativeTarget "MNXTelemetryTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD1E08DE2E8984C50067B114 /* Debug */,
+				AD1E08DF2E8984C50067B114 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AD1E09012E899AC20067B114 /* XCRemoteSwiftPackageReference "Amplitude-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/amplitude/Amplitude-Swift";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.15.0;
+			};
+		};
+		AD1E09142E89C5BA0067B114 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.56.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AD1E09022E899AC20067B114 /* AmplitudeSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AD1E09012E899AC20067B114 /* XCRemoteSwiftPackageReference "Amplitude-Swift" */;
+			productName = AmplitudeSwift;
+		};
+		AD1E09152E89C5BA0067B114 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AD1E09142E89C5BA0067B114 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = AD1E08BC2E8984C40067B114 /* Project object */;
+}
