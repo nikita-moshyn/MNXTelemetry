@@ -12,9 +12,17 @@
 import Foundation
 internal import Sentry
 
-public final class SentryCrashProvider: CrashProvider {
+public final class SentryCrashProvider: CrashProvider, TelemetryControllableProvider, TelemetryDebugModeApplicable {
     private let dsn: String
     private let environment: String?
+    public var telemetryControl = TelemetryProviderControl()
+    private var sdkDebugMode: Bool = {
+        #if DEBUG
+        true
+        #else
+        false
+        #endif
+    }()
 
     public init(dsn: String, environment: String? = nil) {
         self.dsn = dsn
@@ -27,9 +35,7 @@ public final class SentryCrashProvider: CrashProvider {
             if let env = self.environment {
                 options.environment = env
             }
-            #if DEBUG
-            options.debug = true
-            #endif
+            options.debug = self.sdkDebugMode
             // Enable automatic session tracking so crashes and sessions are correlated.
             options.enableAutoSessionTracking = true
             // Privacy note: leave PII off unless you have a clear need and disclosure.
@@ -59,5 +65,9 @@ public final class SentryCrashProvider: CrashProvider {
                 for (key, value) in ctx { scope.setExtra(value: value, key: key) }
             }
         }
+    }
+    
+    public func applyDebugMode(_ enabled: Bool) {
+        sdkDebugMode = enabled
     }
 }

@@ -23,11 +23,11 @@ let package = Package(name: "MNXTelemetry",
                                     .product(name: "AmplitudeSwift", package: "Amplitude-Swift"),
                                     .product(name: "Sentry", package: "sentry-cocoa")
                                 ],
-                                path: "Sources"),
+                                path: "Sources/MNXTelemetry"),
                         .testTarget(
                             name: "MNXTelemetryTests",
-                            dependencies: ["MNXTelemetry"]),
+                            dependencies: ["MNXTelemetry"],
+                            path: "MNXTelemetryTests"),
                       ],
                       swiftLanguageModes: [.v6]
 )
-
