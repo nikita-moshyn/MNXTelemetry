@@ -12,10 +12,11 @@
 import Foundation
 internal import AmplitudeSwift
 
-public final class AmplitudeProvider: AnalyticsProvider {
+public final class AmplitudeProvider: AnalyticsProvider, TelemetryControllableProvider, TelemetryDebugModeApplicable {
     private let apiKey: String
     
     private let amplitude: Amplitude
+    public var telemetryControl = TelemetryProviderControl()
 
     public init(apiKey: String, serverZone: AmplitudeServerZone = .EU) {
         self.apiKey = apiKey
@@ -41,6 +42,12 @@ public final class AmplitudeProvider: AnalyticsProvider {
     public func setOptOut(_ enabled: Bool) {
         amplitude.optOut = enabled
         // TODO: set opt-out on Amplitude instance
+    }
+    
+    public func applyDebugMode(_ enabled: Bool) {
+        // AmplitudeSwift does not currently expose a stable runtime debug switch across versions.
+        // Keep this value so the framework has a consistent provider-level debug API.
+        _ = enabled
     }
 }
 

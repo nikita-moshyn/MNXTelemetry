@@ -11,9 +11,10 @@
 
 import Foundation
 
-public final class PostHogProvider: AnalyticsProvider {
+public final class PostHogProvider: AnalyticsProvider, TelemetryControllableProvider, TelemetryDebugModeApplicable {
     private let apiKey: String
     private let host: URL
+    public var telemetryControl = TelemetryProviderControl()
 
     public init(apiKey: String, host: URL) {
         self.apiKey = apiKey
@@ -36,5 +37,9 @@ public final class PostHogProvider: AnalyticsProvider {
 
     public func setOptOut(_ enabled: Bool) {
         // TODO: opt-out
+    }
+    
+    public func applyDebugMode(_ enabled: Bool) {
+        _ = enabled
     }
 }
