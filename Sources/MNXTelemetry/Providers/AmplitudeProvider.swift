@@ -12,35 +12,52 @@
 import Foundation
 internal import AmplitudeSwift
 
-public final class AmplitudeProvider: AnalyticsProvider, TelemetryControllableProvider, TelemetryDebugModeApplicable {
+public final class AmplitudeProvider: AnalyticsProvider, TelemetryLifecycleStartable, TelemetryControllableProvider, TelemetryDebugModeApplicable {
     private let apiKey: String
+    private let serverZone: AmplitudeServerZone
     
-    private let amplitude: Amplitude
+    private var amplitude: Amplitude?
+    private var pendingOptOut = false
     public var telemetryControl = TelemetryProviderControl()
 
     public init(apiKey: String, serverZone: AmplitudeServerZone = .EU) {
         self.apiKey = apiKey
-        self.amplitude = Amplitude(configuration: .init(apiKey: apiKey, serverZone: serverZone.serverZone))
-        // TODO: Initialize Amplitude SDK (identify instance, enable batching)
+        self.serverZone = serverZone
+    }
+
+    public func start() {
+        guard amplitude == nil else { return }
+        let instance = Amplitude(configuration: .init(apiKey: apiKey, serverZone: serverZone.serverZone))
+        instance.optOut = pendingOptOut
+        amplitude = instance
     }
 
     public func track(name: String, properties: [String : Any]?) {
+        guard let amplitude else { return }
         amplitude.track(eventType: name, eventProperties: properties)
         // TODO: Amplitude logEvent(name, withEventProperties: properties)
     }
 
     public func setUser(id: String?, properties: [String : Any]) {
+        guard let amplitude else { return }
         amplitude.setUserId(userId: id)
-        // TODO: setUserId + identify object to set user properties
+        guard !properties.isEmpty else { return }
+        let identify = Identify()
+        for (key, value) in properties {
+            _ = identify.set(property: key, value: value)
+        }
+        amplitude.identify(identify: identify)
     }
 
     public func flush() {
+        guard let amplitude else { return }
         amplitude.flush()
         // TODO: optional (Amplitude often batches automatically)
     }
 
     public func setOptOut(_ enabled: Bool) {
-        amplitude.optOut = enabled
+        pendingOptOut = enabled
+        amplitude?.optOut = enabled
         // TODO: set opt-out on Amplitude instance
     }
     

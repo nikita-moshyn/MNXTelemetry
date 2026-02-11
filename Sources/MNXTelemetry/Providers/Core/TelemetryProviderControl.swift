@@ -14,11 +14,15 @@ import Foundation
 public struct TelemetryProviderControl {
     /// Provider-specific debug mode override. `nil` means "use telemetry global value".
     public var debugMode: Bool?
+    /// Provider-specific remote enable override across all build configurations.
+    /// `nil` means "use telemetry debug/production defaults".
+    public var remoteEnabled: Bool?
     /// Provider-specific remote behavior in debug builds. `nil` means "use telemetry global value".
     public var remoteInDebug: Bool?
 
-    public init(debugMode: Bool? = nil, remoteInDebug: Bool? = nil) {
+    public init(debugMode: Bool? = nil, remoteEnabled: Bool? = nil, remoteInDebug: Bool? = nil) {
         self.debugMode = debugMode
+        self.remoteEnabled = remoteEnabled
         self.remoteInDebug = remoteInDebug
     }
 }
@@ -43,6 +47,20 @@ public extension TelemetryControllableProvider {
     @discardableResult
     func remoteInDebug(_ enabled: Bool) -> Self {
         telemetryControl.remoteInDebug = enabled
+        return self
+    }
+    
+    /// Force remote on/off for this provider in all build configurations.
+    @discardableResult
+    func remoteEnabled(_ enabled: Bool) -> Self {
+        telemetryControl.remoteEnabled = enabled
+        return self
+    }
+    
+    /// Convenience helper to disable or re-enable all remote calls for this provider.
+    @discardableResult
+    func disableRemote(_ disabled: Bool = true) -> Self {
+        telemetryControl.remoteEnabled = !disabled
         return self
     }
 

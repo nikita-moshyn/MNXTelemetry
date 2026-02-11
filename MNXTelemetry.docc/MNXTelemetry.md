@@ -33,10 +33,11 @@ let sentry = SentryCrashProvider(dsn: "<dsn>")
 
 let amplitude = AmplitudeProvider(apiKey: "<key>")
     .debugMode(false)
-    .disableRemoteInDebug()
+    .disableRemote()
 
 Telemetry.shared.register(crashProvider: sentry)
 Telemetry.shared.register(provider: amplitude)
+Telemetry.shared.start()
 ```
 
 ## Topics
@@ -57,3 +58,4 @@ Telemetry.shared.register(provider: amplitude)
 - ``TelemetryProviderControl``
 - ``TelemetryControllableProvider``
 - ``TelemetryDebugModeApplicable``
+- ``TelemetryLifecycleStartable``
