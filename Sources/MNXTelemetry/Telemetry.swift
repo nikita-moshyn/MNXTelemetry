@@ -17,8 +17,12 @@ public final class Telemetry {
     
     private var analyticsProviders: [AnalyticsProvider] = []
     private var crashProvider: CrashProvider?
-    private var crashProviderStarted = false
+    private var telemetryStarted = false
+    private var startedLifecycleProviders: Set<ObjectIdentifier> = []
     private var optedOut = false
+    private var hasUserIdentityContext = false
+    private var currentUserID: String?
+    private var currentUserProperties: [String: Any] = [:]
     private var rawEventHandler: TelemetryRawEventHandler?
     private var prettyEventHandler: TelemetryPrettyEventHandler?
     private var prettyEventFormatter: TelemetryPrettyEventFormatter = TelemetryPrettyFormatter.default
@@ -37,26 +41,55 @@ public final class Telemetry {
     public func register(provider: AnalyticsProvider) {
         analyticsProviders.append(provider)
         applyDebugModeIfSupported(to: provider)
+        let remoteEnabled = shouldSendRemote(for: provider)
         emitDebugEvent("register_provider", info: [
             "provider": providerName(for: provider),
-            "kind": "analytics"
+            "kind": "analytics",
+            "remote_enabled": remoteEnabled
         ])
+        
+        guard telemetryStarted else { return }
+        guard remoteEnabled else { return }
+        ensureLifecycleProviderStartedIfNeeded(provider, kind: "analytics")
+        replayCachedUserIfNeeded(to: provider)
     }
 
     public func register(crashProvider: CrashProvider) {
         self.crashProvider = crashProvider
         applyDebugModeIfSupported(to: crashProvider)
-        ensureCrashProviderStartedIfNeeded()
+        let remoteEnabled = shouldSendRemote(for: crashProvider)
         emitDebugEvent("register_provider", info: [
             "provider": providerName(for: crashProvider),
             "kind": "crash",
-            "remote_enabled": shouldSendRemote(for: crashProvider)
+            "remote_enabled": remoteEnabled
         ])
+
+        guard telemetryStarted else { return }
+        guard remoteEnabled else { return }
+        ensureLifecycleProviderStartedIfNeeded(crashProvider, kind: "crash")
+        replayCachedUserIfNeeded(to: crashProvider)
     }
     
     // MARK: - Public API
+    
+    /// Starts telemetry and initializes only providers that are currently remote-enabled.
+    @discardableResult
+    public func start() -> Self {
+        telemetryStarted = true
+        startRemoteProvidersIfNeeded()
+        replayCachedUserToRemoteProvidersIfNeeded()
+        emitDebugEvent("telemetry_started", info: [
+            "analytics_providers_count": analyticsProviders.count,
+            "has_crash_provider": crashProvider != nil
+        ])
+        return self
+    }
 
     public func setUser(id: String?, properties: [String: Any] = [:]) {
+        hasUserIdentityContext = true
+        currentUserID = id
+        currentUserProperties = properties
+
         guard !optedOut else {
             emitDebugEvent("set_user_skipped", info: ["reason": "opt_out"])
             return
@@ -69,9 +102,18 @@ public final class Telemetry {
                 "provider": providerName,
                 "id": id ?? "nil",
                 "properties": properties,
-                "remote_enabled": remoteEnabled
+                "remote_enabled": remoteEnabled,
+                "telemetry_started": telemetryStarted
             ])
             guard remoteEnabled else { continue }
+            guard telemetryStarted else {
+                emitDebugEvent("set_user_deferred", info: [
+                    "provider": providerName,
+                    "reason": "telemetry_not_started"
+                ])
+                continue
+            }
+            ensureLifecycleProviderStartedIfNeeded(provider, kind: "analytics")
             provider.setUser(id: id, properties: properties)
         }
         
@@ -81,10 +123,18 @@ public final class Telemetry {
             "provider": providerName(for: crashProvider),
             "id": id ?? "nil",
             "properties": properties,
-            "remote_enabled": remoteEnabled
+            "remote_enabled": remoteEnabled,
+            "telemetry_started": telemetryStarted
         ])
         guard remoteEnabled else { return }
-        ensureCrashProviderStartedIfNeeded()
+        guard telemetryStarted else {
+            emitDebugEvent("set_user_deferred", info: [
+                "provider": providerName(for: crashProvider),
+                "reason": "telemetry_not_started"
+            ])
+            return
+        }
+        ensureLifecycleProviderStartedIfNeeded(crashProvider, kind: "crash")
         crashProvider.setUser(id: id, properties: properties)
     }
 
@@ -104,9 +154,19 @@ public final class Telemetry {
                 "provider": providerName(for: provider),
                 "name": name,
                 "properties": properties ?? [:],
-                "remote_enabled": remoteEnabled
+                "remote_enabled": remoteEnabled,
+                "telemetry_started": telemetryStarted
             ])
             guard remoteEnabled else { continue }
+            guard telemetryStarted else {
+                emitDebugEvent("track_deferred", info: [
+                    "provider": providerName(for: provider),
+                    "name": name,
+                    "reason": "telemetry_not_started"
+                ])
+                continue
+            }
+            ensureLifecycleProviderStartedIfNeeded(provider, kind: "analytics")
             provider.track(name: name, properties: properties)
         }
     }
@@ -127,11 +187,19 @@ public final class Telemetry {
             "provider": providerName(for: crashProvider),
             "error": String(describing: error),
             "context": context ?? [:],
-            "remote_enabled": remoteEnabled
+            "remote_enabled": remoteEnabled,
+            "telemetry_started": telemetryStarted
         ])
         
         guard remoteEnabled else { return }
-        ensureCrashProviderStartedIfNeeded()
+        guard telemetryStarted else {
+            emitDebugEvent("log_error_deferred", info: [
+                "provider": providerName(for: crashProvider),
+                "reason": "telemetry_not_started"
+            ])
+            return
+        }
+        ensureLifecycleProviderStartedIfNeeded(crashProvider, kind: "crash")
         crashProvider.capture(error: error, context: context)
     }
 
@@ -151,11 +219,19 @@ public final class Telemetry {
             "provider": providerName(for: crashProvider),
             "message": message,
             "context": context ?? [:],
-            "remote_enabled": remoteEnabled
+            "remote_enabled": remoteEnabled,
+            "telemetry_started": telemetryStarted
         ])
         
         guard remoteEnabled else { return }
-        ensureCrashProviderStartedIfNeeded()
+        guard telemetryStarted else {
+            emitDebugEvent("log_message_deferred", info: [
+                "provider": providerName(for: crashProvider),
+                "reason": "telemetry_not_started"
+            ])
+            return
+        }
+        ensureLifecycleProviderStartedIfNeeded(crashProvider, kind: "crash")
         crashProvider.capture(message: message, context: context)
     }
 
@@ -164,9 +240,18 @@ public final class Telemetry {
             let remoteEnabled = shouldSendRemote(for: provider)
             emitDebugEvent("flush", info: [
                 "provider": providerName(for: provider),
-                "remote_enabled": remoteEnabled
+                "remote_enabled": remoteEnabled,
+                "telemetry_started": telemetryStarted
             ])
             guard remoteEnabled else { continue }
+            guard telemetryStarted else {
+                emitDebugEvent("flush_deferred", info: [
+                    "provider": providerName(for: provider),
+                    "reason": "telemetry_not_started"
+                ])
+                continue
+            }
+            ensureLifecycleProviderStartedIfNeeded(provider, kind: "analytics")
             provider.flush()
         }
     }
@@ -175,6 +260,12 @@ public final class Telemetry {
         optedOut = enabled
         emitDebugEvent("opt_out", info: ["enabled": enabled])
         analyticsProviders.forEach { $0.setOptOut(enabled) }
+        guard !enabled else { return }
+        guard telemetryStarted else { return }
+        analyticsProviders.forEach { replayCachedUserIfNeeded(to: $0) }
+        if let crashProvider, shouldSendRemote(for: crashProvider) {
+            replayCachedUserIfNeeded(to: crashProvider)
+        }
     }
     
     // MARK: - Debug Event Hooks
@@ -225,7 +316,14 @@ public final class Telemetry {
     @discardableResult
     public func remoteInDebug(_ enabled: Bool) -> Self {
         globalRemoteInDebug = enabled
-        ensureCrashProviderStartedIfNeeded()
+        guard telemetryStarted else {
+            emitDebugEvent("global_remote_in_debug", info: ["enabled": enabled])
+            return self
+        }
+        startRemoteProvidersIfNeeded()
+        if enabled {
+            replayCachedUserToRemoteProvidersIfNeeded()
+        }
         emitDebugEvent("global_remote_in_debug", info: ["enabled": enabled])
         return self
     }
@@ -239,6 +337,11 @@ public final class Telemetry {
     // MARK: - Static forwarder
     public static func track(name: String, properties: [String: Any]? = nil) {
         Telemetry.shared.track(name: name, properties: properties)
+    }
+    
+    @discardableResult
+    public static func start() -> Telemetry {
+        Telemetry.shared.start()
     }
     
     @discardableResult
@@ -279,6 +382,10 @@ public final class Telemetry {
     }
     
     private func shouldSendRemote(for provider: Any) -> Bool {
+        if let provider = provider as? TelemetryControllableProvider,
+           let localOverride = provider.telemetryControl.remoteEnabled {
+            return localOverride
+        }
         #if DEBUG
         if let provider = provider as? TelemetryControllableProvider,
            let localOverride = provider.telemetryControl.remoteInDebug {
@@ -303,15 +410,73 @@ public final class Telemetry {
         guard let debugAwareProvider = provider as? TelemetryDebugModeApplicable else { return }
         debugAwareProvider.applyDebugMode(resolveDebugMode(for: provider))
     }
+
+    private func replayCachedUserIfNeeded(to provider: AnalyticsProvider) {
+        guard hasUserIdentityContext else { return }
+        guard !optedOut else { return }
+        guard telemetryStarted else { return }
+
+        let remoteEnabled = shouldSendRemote(for: provider)
+        emitDebugEvent("set_user_replay", info: [
+            "provider": providerName(for: provider),
+            "id": currentUserID ?? "nil",
+            "properties": currentUserProperties,
+            "remote_enabled": remoteEnabled,
+            "telemetry_started": telemetryStarted
+        ])
+
+        guard remoteEnabled else { return }
+        ensureLifecycleProviderStartedIfNeeded(provider, kind: "analytics")
+        provider.setUser(id: currentUserID, properties: currentUserProperties)
+    }
+
+    private func replayCachedUserIfNeeded(to crashProvider: CrashProvider) {
+        guard hasUserIdentityContext else { return }
+        guard !optedOut else { return }
+        guard telemetryStarted else { return }
+
+        let remoteEnabled = shouldSendRemote(for: crashProvider)
+        emitDebugEvent("set_user_replay", info: [
+            "provider": providerName(for: crashProvider),
+            "id": currentUserID ?? "nil",
+            "properties": currentUserProperties,
+            "remote_enabled": remoteEnabled,
+            "telemetry_started": telemetryStarted
+        ])
+
+        guard remoteEnabled else { return }
+        ensureLifecycleProviderStartedIfNeeded(crashProvider, kind: "crash")
+        crashProvider.setUser(id: currentUserID, properties: currentUserProperties)
+    }
     
-    private func ensureCrashProviderStartedIfNeeded() {
+    private func startRemoteProvidersIfNeeded() {
+        for provider in analyticsProviders {
+            guard shouldSendRemote(for: provider) else { continue }
+            ensureLifecycleProviderStartedIfNeeded(provider, kind: "analytics")
+        }
         guard let crashProvider else { return }
         guard shouldSendRemote(for: crashProvider) else { return }
-        guard !crashProviderStarted else { return }
-        crashProvider.start()
-        crashProviderStarted = true
-        emitDebugEvent("crash_provider_started", info: [
-            "provider": providerName(for: crashProvider)
+        ensureLifecycleProviderStartedIfNeeded(crashProvider, kind: "crash")
+    }
+    
+    private func replayCachedUserToRemoteProvidersIfNeeded() {
+        for provider in analyticsProviders where shouldSendRemote(for: provider) {
+            replayCachedUserIfNeeded(to: provider)
+        }
+        if let crashProvider, shouldSendRemote(for: crashProvider) {
+            replayCachedUserIfNeeded(to: crashProvider)
+        }
+    }
+    
+    private func ensureLifecycleProviderStartedIfNeeded(_ provider: Any, kind: String) {
+        guard let lifecycleProvider = provider as? TelemetryLifecycleStartable else { return }
+        let providerID = ObjectIdentifier(lifecycleProvider)
+        guard !startedLifecycleProviders.contains(providerID) else { return }
+        lifecycleProvider.start()
+        startedLifecycleProviders.insert(providerID)
+        emitDebugEvent("provider_started", info: [
+            "provider": providerName(for: provider),
+            "kind": kind
         ])
     }
 }

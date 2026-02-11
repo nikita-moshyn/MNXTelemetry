@@ -11,8 +11,12 @@
 
 import Foundation
 
-public protocol CrashProvider {
+/// Adopt on providers that should be initialized lazily by `Telemetry.start()`.
+public protocol TelemetryLifecycleStartable: AnyObject {
     func start()
+}
+
+public protocol CrashProvider: TelemetryLifecycleStartable {
     func setUser(id: String?, properties: [String: Any])
     func capture(error: Error, context: [String: Any]?)
     func capture(message: String, context: [String: Any]?)

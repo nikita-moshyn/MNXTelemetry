@@ -24,13 +24,22 @@ public enum TelemetryIdentity {
     /// Returns the current user id, creating + storing a new one in the Keychain if missing.
     @discardableResult
     public static func setUser() -> String {
-        if let cachedID { return cachedID }
-        if let existing = try? readFromKeychain() {
-            cachedID = existing
-            // Optionally inform analytics crash providers:
-            Telemetry.shared.setUser(id: existing)
-            return existing
+        if let cachedID {
+            Telemetry.shared.setUser(id: cachedID)
+            return cachedID
         }
+
+        do {
+            if let existing = try readFromKeychain() {
+                cachedID = existing
+                Telemetry.shared.setUser(id: existing)
+                return existing
+            }
+        } catch {
+            Telemetry.shared.logMessage("telemetry_identity_keychain_read_failed",
+                                        context: ["error": String(describing: error)])
+        }
+
         let fresh = UUID().uuidString
         do {
             try saveToKeychain(fresh)
@@ -38,7 +47,10 @@ public enum TelemetryIdentity {
             Telemetry.shared.setUser(id: fresh)
             return fresh
         } catch {
-            // As a fallback, keep it in memory for this run only.
+            Telemetry.shared.logMessage("telemetry_identity_keychain_write_failed", context: [
+                "error": String(describing: error),
+                "fallback": "memory_only"
+            ])
             cachedID = fresh
             Telemetry.shared.setUser(id: fresh, properties: ["persisted_in_keychain": false])
             return fresh
@@ -49,7 +61,13 @@ public enum TelemetryIdentity {
     /// Call this for your "Delete ID" button action.
     @discardableResult
     public static func reset() -> String {
-        _ = try? deleteFromKeychain()
+        do {
+            _ = try deleteFromKeychain()
+        } catch {
+            Telemetry.shared.logMessage("telemetry_identity_keychain_delete_failed", context: [
+                "error": String(describing: error)
+            ])
+        }
         cachedID = nil
         return setUser() // Auto-generate and store a new id, and set it on Telemetry.
     }
@@ -61,7 +79,7 @@ public enum TelemetryIdentity {
         let data = Data(id.utf8)
 
         // Attempt add
-        var add: [String: Any] = [
+        let add: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
             kSecAttrAccount as String: account,

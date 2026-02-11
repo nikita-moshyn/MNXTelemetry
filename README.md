@@ -41,8 +41,10 @@ let sentry = SentryCrashProvider(dsn: "<dsn>")
 
 let amplitude = AmplitudeProvider(apiKey: "<key>")
     .debugMode(false)
-    .disableRemoteInDebug() // keep local-only in Debug
+    .disableRemote() // force local-only in all builds
+    .disableRemoteInDebug() // optional debug-only override
 
 Telemetry.shared.register(crashProvider: sentry)
 Telemetry.shared.register(provider: amplitude)
+Telemetry.shared.start() // initialize only remote-enabled providers
 ```
